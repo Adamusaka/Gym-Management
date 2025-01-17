@@ -140,7 +140,24 @@ Dodajate naročnine posameznim članom.
 ## Slike
 
 ### Sign in form
-![image](https://github.com/user-attachments/assets/0eff719e-a22b-4733-86e7-03028287b384)
+![image](https://github.com/user-attachments/assets/1dca92e6-1062-4be1-86f6-f088d6cf5113)
+
 
 ### Sign up form
-![image](https://github.com/user-attachments/assets/41869abb-96b0-488a-8645-9eed80a2d239)
+![image](https://github.com/user-attachments/assets/4a287b30-8040-47ba-a05f-32c452149083)
+
+### Če nisi član fitnesa, nemoreš se check in-at
+![image](https://github.com/user-attachments/assets/622973f1-29e4-47c4-9c66-1621724662c7)
+
+### Check in (Nedokončan izgled)
+![image](https://github.com/user-attachments/assets/c50bc7b9-7fde-47b2-9d06-15ae3a41d061)
+
+### Check out (Nedokončan izgled)
+![image](https://github.com/user-attachments/assets/55e72e9d-e083-4256-bca2-30ba75d0ff60)
+
+### Admin view (Nedokončan izgled)
+![image](https://github.com/user-attachments/assets/1edc6d33-e158-4d7d-9999-ec182a21291b)
+
+### Admin view - prijava člana
+![image](https://github.com/user-attachments/assets/161b84d5-96d0-4553-9af5-abd4cefd7af9)
+
