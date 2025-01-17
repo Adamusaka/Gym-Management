@@ -1,7 +1,7 @@
 # Gym-Management
 Projektna za predmet IS 2025
 
-Adam Zeggai 63230365
+Adam Zeggai 63230365 </br>
 Miha Kastelic 63230137
 
 Ta repozitorij vsebuje **Gym-Management**, ki je sestavljen iz treh glavnih delov: 
