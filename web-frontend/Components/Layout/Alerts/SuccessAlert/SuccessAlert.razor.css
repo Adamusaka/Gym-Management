@@ -1,0 +1,48 @@
+.success-alert-container {
+    display: flex;
+    position: absolute;
+    justify-self: center;
+    align-self: center;
+    flex-direction: column;
+    top: 5%;
+    width: 340px;
+    padding: 5px;
+    z-index: 100;
+    background-color: #58ff74;
+    opacity: 0.8;
+    border: 2px solid #039420;
+    border-radius: 15px;
+    animation: opacityScaleRaise 0.35s ease-in alternate-reverse forwards 1;
+}
+
+.success-alert-title {
+    display: inline-block;
+    color: #187f1b;
+    width: 100%;
+    font-weight: bolder;
+    font-size: 22px;
+    margin-top: 5px;
+}
+
+.success-alert-message {
+    color: #ffe4e4;
+    font-weight: bold;
+    margin: 0px;
+}
+
+.success-alert-remove-icon {
+    display: inline-block;
+    color: #075108;
+    float: right;
+    transition: 100ms;
+}
+
+.success-alert-remove-icon:hover {
+    color: #ffffff;
+
+}
+
+.success-alert-remove-icon:active {
+    scale: 0.9;
+    color: #000000;
+}

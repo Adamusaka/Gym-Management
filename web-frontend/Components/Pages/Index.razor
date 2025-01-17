@@ -1,0 +1,23 @@
+﻿@page "/"
+
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@inject ProtectedLocalStorage _localStorage
+@inject NavigationManager _navigationManager
+
+@code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        bool isSignedIn = false;
+        try
+        {
+            isSignedIn = Boolean.Parse((await _localStorage.GetAsync<string>("isSignedIn")).Value);
+        } catch(Exception ex)
+        {
+            isSignedIn = false;
+        }
+
+        await _localStorage.SetAsync("isSignedIn", isSignedIn.ToString());
+
+        _navigationManager.NavigateTo("/Signin");
+    }
+}

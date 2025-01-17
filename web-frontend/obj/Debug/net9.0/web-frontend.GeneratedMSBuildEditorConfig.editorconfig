@@ -1,0 +1,73 @@
+is_global = true
+build_property.TargetFramework = net9.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = web-frontend
+build_property.RootNamespace = web-frontend
+build_property.ProjectDir = C:\Users\Administrator\Desktop\gym-management\web-frontend\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 9.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\Administrator\Desktop\gym-management\web-frontend
+build_property._RazorSourceGeneratorDebug = 
+build_property.EffectiveAnalysisLevelStyle = 9.0
+build_property.EnableCodeStyleSeverity = 
+
+[C:/Users/Administrator/Desktop/gym-management/web-frontend/Components/App.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBcHAucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Administrator/Desktop/gym-management/web-frontend/Components/Pages/Index.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xJbmRleC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Administrator/Desktop/gym-management/web-frontend/Components/Routes.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xSb3V0ZXMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Administrator/Desktop/gym-management/web-frontend/Components/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xfSW1wb3J0cy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Administrator/Desktop/gym-management/web-frontend/Components/Layout/Alerts/ErrorAlert/ErrorAlert.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcQWxlcnRzXEVycm9yQWxlcnRcRXJyb3JBbGVydC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-723f72hcfb
+
+[C:/Users/Administrator/Desktop/gym-management/web-frontend/Components/Layout/Alerts/SuccessAlert/SuccessAlert.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcQWxlcnRzXFN1Y2Nlc3NBbGVydFxTdWNjZXNzQWxlcnQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-62yriwa3ks
+
+[C:/Users/Administrator/Desktop/gym-management/web-frontend/Components/Layout/Alerts/Tabels/UsersTable/UsersTable.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcQWxlcnRzXFRhYmVsc1xVc2Vyc1RhYmxlXFVzZXJzVGFibGUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-3nfcq9g4xi
+
+[C:/Users/Administrator/Desktop/gym-management/web-frontend/Components/Layout/Forms/SigninForm/SigninForm.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcRm9ybXNcU2lnbmluRm9ybVxTaWduaW5Gb3JtLnJhem9y
+build_metadata.AdditionalFiles.CssScope = b-f0fi0dda38
+
+[C:/Users/Administrator/Desktop/gym-management/web-frontend/Components/Layout/Forms/SignupForm/SignupForm.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcRm9ybXNcU2lnbnVwRm9ybVxTaWdudXBGb3JtLnJhem9y
+build_metadata.AdditionalFiles.CssScope = b-smekzubsy7
+
+[C:/Users/Administrator/Desktop/gym-management/web-frontend/Components/Layout/MainLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcTWFpbkxheW91dC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-2ghvq5qirg
+
+[C:/Users/Administrator/Desktop/gym-management/web-frontend/Components/Pages/Home.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xIb21lLnJhem9y
+build_metadata.AdditionalFiles.CssScope = b-qhgm2fwmt5
+
+[C:/Users/Administrator/Desktop/gym-management/web-frontend/Components/Pages/Signin.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xTaWduaW4ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-4u49r728cw
+
+[C:/Users/Administrator/Desktop/gym-management/web-frontend/Components/Pages/Signup.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xTaWdudXAucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-njj2b8xl0e

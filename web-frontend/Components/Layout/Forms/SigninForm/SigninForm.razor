@@ -1,0 +1,96 @@
+@namespace web_frontend.Components.Layout.Forms.SigninForm
+@inject HttpClient _httpClient;
+@inject NavigationManager _navigationManager
+@inject ProtectedLocalStorage _localStorage
+
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+
+@using System.Text.Json
+@using System.Text
+@using web_frontend.Components.Layout.Alerts.ErrorAlert
+@using web_frontend.Components.Layout.Alerts.SuccessAlert
+
+<ErrorAlert ErrorMessages="@errorMessages"/>
+<SuccessAlert SuccessMessages="@successMessages"/>
+
+<div class="container">
+    <div class="form-container login-width">
+      <div class="form-header">
+        <h2>Login to Gym</h2>
+      </div>
+      <div class="form">
+        <div class="input-group">
+          <label for="email">Email</label>
+          <input type="text" id="email" name="email" placeholder="Enter your email" @bind="email">
+        </div>
+        <div class="input-group">
+          <label for="password">Password</label>
+          <input type="text" id="password" name="password" placeholder="Enter your password" @bind="password">
+        </div>
+        <input type="button" class="btn-primary" value="SIGN IN" @onclick="onClickSignin">
+        <p class="form-footer">Don't have an account? <NavLink href="/Signup">Sign Up</NavLink></p>
+      </div>
+    </div>
+</div>
+
+
+@code {
+    private List<string> errorMessages = new List<string>();
+    private List<string> successMessages = new List<string>();
+
+    private string? email { get; set; } = "";
+    private string? password { get; set; } = "";
+
+    private async Task onClickSignin()
+    {
+        errorMessages = new List<string>();
+        successMessages = new List<string>();
+
+        try
+        {
+            using StringContent SigninJSONContent = new (JsonSerializer.Serialize(new
+            {
+                Email = email,
+                Password = password,
+            }), Encoding.UTF8, "application/json");
+
+            HttpResponseMessage responseSignin = await _httpClient.PostAsync($"/api/authentication/signin", SigninJSONContent);
+
+            var jsonResponseSignin = await responseSignin.Content.ReadFromJsonAsync<SigninResponseBody>();
+            
+            if((int)responseSignin.StatusCode == 200) {
+                successMessages = jsonResponseSignin!.successMessages;
+
+                StateHasChanged();
+
+                await _localStorage.SetAsync("userEmail", email);
+                await _localStorage.SetAsync("isSignedIn", "true");
+                
+                await _localStorage.SetAsync("userRole", jsonResponseSignin!.role);
+                await _localStorage.SetAsync("userId", jsonResponseSignin!.userId.ToString());
+                await _localStorage.SetAsync("isSubscribed", jsonResponseSignin!.isSubscribed.ToString());
+
+                await Task.Delay(1000);
+                _navigationManager.NavigateTo("/Home");
+            } else if ((int)responseSignin.StatusCode == 400)
+            {
+                errorMessages = jsonResponseSignin!.errorMessages;
+            } else if((int)responseSignin.StatusCode == 500)
+            {
+                errorMessages = new List<string>() { "Error in the back-end server" };
+            }
+        } catch(Exception ex)
+        {
+            errorMessages = new List<string>() { "Error in the front-end server" };
+        }
+    }
+
+    private class SigninResponseBody
+    {
+        public List<string>? errorMessages { get; set; }
+        public List<string>? successMessages { get; set; }
+        public string? role { get; set; }
+        public Guid userId { get; set; }
+        public bool isSubscribed { get; set; }
+    }
+}

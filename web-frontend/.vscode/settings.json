@@ -1,0 +1,20 @@
+{
+    "sqltools.connections": [
+        {
+            "mssqlOptions": {
+                "appName": "SQLTools",
+                "useUTC": true,
+                "encrypt": true,
+                "abortTransactionOnError": true
+            },
+            "previewLimit": 50,
+            "server": "192.168.1.66",
+            "port": 1433,
+            "driver": "MSSQL",
+            "name": "gym-management-db",
+            "database": "master",
+            "username": "sa",
+            "password": "a0c0f085-0751-44bb-b370-1e9a1061a379"
+        }
+    ]
+}

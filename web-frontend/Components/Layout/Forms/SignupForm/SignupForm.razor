@@ -1,0 +1,96 @@
+@namespace web_frontend.Components.Layout.Forms.SignupForm
+@inject HttpClient _httpClient;
+@inject NavigationManager _navigationManager
+
+@using System.Text.Json
+@using System.Text
+@using web_frontend.Components.Layout.Alerts.ErrorAlert
+@using web_frontend.Components.Layout.Alerts.SuccessAlert
+
+<ErrorAlert ErrorMessages="@errorMessages"/>
+<SuccessAlert SuccessMessages="@successMessages"/>
+
+<div class="container">
+    <div class="form-container signup-width">
+        <div class="form-header">
+            <h2>Create Your Gym Account</h2>
+        </div>
+        <div class="form">
+        <div class="input-inline-group">
+          <div class="input-group">
+            <label for="first-name">First Name</label>
+            <input type="text" id="first-name" name="first_name" placeholder="Enter your first name" @bind=firstname>
+          </div>
+          <div class="input-group">
+            <label for="last-name">Last Name</label>
+            <input type="text" id="last-name" name="last_name" placeholder="Enter your last name" @bind=lastname>
+          </div>
+        </div>
+        <div class="input-group">
+          <label for="email">Email</label>
+          <input type="text" id="email" name="email" placeholder="Enter your email" @bind=email>
+        </div>
+        <div class="input-group">
+          <label for="password">Password</label>
+          <input type="text" id="password" name="password" placeholder="Enter your password" @bind=password>
+        </div>
+        <button type="submit" class="btn-primary" value="SIGN UP" @onclick=onClickSignup>Sign Up</button>
+        <p class="form-footer">Already have an account? <NavLink href="/Signin">Login</NavLink></p>
+      </div>
+    </div>
+</div>
+
+
+@code {
+    private List<string> errorMessages = new List<string>();
+    private List<string> successMessages = new List<string>();
+
+    private string? email { get; set; } = "";
+    private string? password { get; set; } = "";
+    private string? firstname { get; set; } = "";
+    private string? lastname { get; set; } = "";
+
+    private async Task onClickSignup()
+    {
+        errorMessages = new List<string>();
+        successMessages = new List<string>();
+
+        try
+        {
+            StringContent SignupJSONContent = new (JsonSerializer.Serialize(new
+            {
+                Email = email,
+                Password = password,
+                Firstname = firstname,
+                Lastname = lastname
+            }), Encoding.UTF8, "application/json");
+
+            HttpResponseMessage responseSignup = await _httpClient.PostAsync($"/api/authentication/signup", SignupJSONContent);
+
+            var jsonResponseSignup = await responseSignup.Content.ReadFromJsonAsync<SignupResponseBody>();
+            if((int)responseSignup.StatusCode == 200) {
+                successMessages = jsonResponseSignup!.successMessages;
+
+                StateHasChanged();
+
+                await Task.Delay(1000);
+                _navigationManager.NavigateTo("/signin");
+            } else if((int)responseSignup.StatusCode == 400)
+            {
+                errorMessages = jsonResponseSignup!.errorMessages;
+            } else if((int)responseSignup.StatusCode == 500)
+            {
+                errorMessages = new List<string>() { "Error in the back-end server" };
+            }
+        } catch(Exception ex)
+        {
+            errorMessages = new List<string>() { "Error in the front-end server" };
+        }
+    }
+
+    private class SignupResponseBody
+    {
+        public List<string>? errorMessages { get; set; }
+        public List<string>? successMessages { get; set; }
+    }
+}

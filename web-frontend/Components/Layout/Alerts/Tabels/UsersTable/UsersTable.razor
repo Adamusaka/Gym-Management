@@ -1,0 +1,174 @@
+@using web_frontend.Models
+@using web_frontend.Entities
+@using System.Text
+@using System.Text.Json
+
+@inject IConfiguration Configuration
+@inject HttpClient _httpClient;
+
+@namespace web_frontend.Components.Layout.Tables.UsersTable
+
+<table>
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Join date</th>
+            <th>End date</th>
+            <th>Subscription status</th>
+            <th>Manage subscription</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(UserJoinSubscriptionModel user in users)
+        {
+            <tr>
+                <td>@user.FirstName</td>
+                <td>@user.LastName</td>
+                <td>@user.Email</td>
+                <td>@user.Role</td>
+                <td>@((user.JoinDate == null) ? "NULL" : user.JoinDate)</td>
+                <td>@((user.EndDate == null) ? "NULL" : user.EndDate)</td>
+                <td>@((user.IsSubscribed) ? "SUBSCRIBED" : "NOT SUBSCRIBED")</td>
+                <td style="display: inline-flex;">
+                    @if(user.IsSubscribed) 
+                    {
+                        <input type="button" value="UNSUBSCRIBE" @onclick="() => DeleteSubscribtion(user.UserId)"/>
+                    } else {
+                        <input style="margin-right: 10px;" type="button" value="SUBSCRIBE" @onclick="() => AddSubscribtion(user.UserId)"/>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code
+{
+    public List<string> errorMessages = new List<string>();
+    public List<string> successMessages = new List<string>();
+    private List<UserJoinSubscriptionModel> users = new List<UserJoinSubscriptionModel>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await RefreshUsersData();
+    }
+
+    private async Task RefreshUsersData()
+    {
+        errorMessages = new List<string>();
+
+        try
+        {
+            HttpResponseMessage responseUsers = await _httpClient.GetAsync($"/api/user");
+
+            var jsonResponseCheckin = await responseUsers.Content.ReadFromJsonAsync<UserResponseBody>();
+
+            if((int)responseUsers.StatusCode == 200) {
+                users = jsonResponseCheckin!.users;
+            }else if((int)responseUsers.StatusCode == 500)
+            {
+                errorMessages = new List<string>() { "Error in the back-end server" };
+            }
+        } catch(Exception ex)
+        {
+            errorMessages = new List<string>() { "Error in the front-end server" };
+        }
+    }
+
+    private async Task AddSubscribtion(Guid UserId)
+    {
+        errorMessages = new List<string>();
+        successMessages = new List<string>();
+
+        try
+        {
+            using StringContent SubscriptionJSONContent = new (JsonSerializer.Serialize(new
+            {
+                UserId = UserId,
+            }), Encoding.UTF8, "application/json");
+
+            HttpResponseMessage responseSubscription = await _httpClient.PostAsync($"/api/subscription", SubscriptionJSONContent);
+
+            var jsonResponseSubscription = await responseSubscription.Content.ReadFromJsonAsync<AddSubscriptionResponseBody>();
+
+            if((int)responseSubscription.StatusCode == 200) {
+                successMessages = jsonResponseSubscription!.successMessages;
+
+                await RefreshUsersData();
+            } else if ((int)responseSubscription.StatusCode == 400)
+            {
+                errorMessages = jsonResponseSubscription!.errorMessages;
+            } else if((int)responseSubscription.StatusCode == 500)
+            {
+                errorMessages = new List<string>() { "Error in the back-end server" };
+            }
+        } catch(Exception ex)
+        {
+            errorMessages = new List<string>() { "Error in the front-end server" };
+        } finally {
+            StateHasChanged();
+
+
+        }
+    }
+
+    private async Task DeleteSubscribtion(Guid UserId)
+    {
+        errorMessages = new List<string>();
+        successMessages = new List<string>();
+
+        try
+        {
+            using StringContent SubscriptionJSONContent = new (JsonSerializer.Serialize(new
+            {
+                UserId = UserId,
+            }), Encoding.UTF8, "application/json");
+
+            var responseSubscription = await _httpClient.SendAsync(new HttpRequestMessage {
+                Method = HttpMethod.Delete,
+                RequestUri = new Uri($"{Configuration.GetSection("BaseURL:backend").Value}/api/subscription"),
+                Content = SubscriptionJSONContent
+            });
+
+            var jsonResponseSubscription = await responseSubscription.Content.ReadFromJsonAsync<DeleteSubscriptionResponseBody>();
+
+            if((int)responseSubscription.StatusCode == 200) {
+                successMessages = jsonResponseSubscription!.successMessages;
+
+                await RefreshUsersData();
+            } else if ((int)responseSubscription.StatusCode == 400)
+            {
+                errorMessages = jsonResponseSubscription!.errorMessages;
+            } else if((int)responseSubscription.StatusCode == 500)
+            {
+                errorMessages = new List<string>() { "Error in the back-end server" };
+            }
+        } catch(Exception ex)
+        {
+            errorMessages = new List<string>() { "Error in the front-end server" };
+        } finally {
+            StateHasChanged();
+        }
+    }
+    
+    private class UserResponseBody
+    {
+        public List<UserJoinSubscriptionModel>? users { get; set; }
+    }
+
+    private class AddSubscriptionResponseBody
+    {
+        public List<string>? errorMessages { get; set; }
+        public List<string>? successMessages { get; set; }
+    }
+
+    private class DeleteSubscriptionResponseBody
+    {
+        public List<string>? errorMessages { get; set; }
+        public List<string>? successMessages { get; set; }
+    }
+
+}
